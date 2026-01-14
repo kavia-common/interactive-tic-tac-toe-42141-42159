@@ -1,104 +1,250 @@
-/* CSS Variables for Theme Management */
+/* Ocean Professional theme (modern, minimal, responsive) */
 :root {
-  /* Light theme colors */
-  --bg-primary: #ffffff;
-  --bg-secondary: #f8f9fa;
-  --text-primary: #282c34;
-  --text-secondary: #61dafb;
-  --border-color: #e9ecef;
-  --button-bg: #007bff;
-  --button-text: #ffffff;
+  --primary: #2563eb;
+  --accent: #f59e0b;
+  --error: #ef4444;
+
+  --bg: #f9fafb;
+  --surface: #ffffff;
+  --text: #111827;
+  --muted: rgba(17, 24, 39, 0.65);
+
+  --ring: rgba(37, 99, 235, 0.35);
+  --shadow: 0 10px 30px rgba(17, 24, 39, 0.08);
+  --shadow-soft: 0 6px 16px rgba(17, 24, 39, 0.08);
+
+  --radius-lg: 18px;
+  --radius-md: 14px;
+  --radius-sm: 12px;
+
+  --transition: 160ms ease;
 }
 
-[data-theme="dark"] {
-  /* Dark theme colors */
-  --bg-primary: #1a1a1a;
-  --bg-secondary: #282c34;
-  --text-primary: #ffffff;
-  --text-secondary: #61dafb;
-  --border-color: #404040;
-  --button-bg: #0056b3;
-  --button-text: #ffffff;
+* {
+  box-sizing: border-box;
 }
 
-.App {
-  text-align: center;
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
+.appRoot {
   min-height: 100vh;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  display: grid;
+  place-items: center;
+  padding: 24px 16px;
+  background:
+    radial-gradient(1000px 600px at 50% 0%, rgba(37, 99, 235, 0.12), transparent 60%),
+    linear-gradient(180deg, rgba(37, 99, 235, 0.10), rgba(249, 250, 251, 1) 55%),
+    var(--bg);
+  color: var(--text);
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.gameShell {
+  width: 100%;
+  max-width: 560px;
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(17, 24, 39, 0.08);
+  border-radius: var(--radius-lg);
+  padding: 18px;
+  box-shadow: var(--shadow);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.gameHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
 }
 
-.App-header {
-  background-color: var(--bg-secondary);
-  min-height: 100vh;
+.titleBlock {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: var(--text-primary);
-  transition: background-color 0.3s ease;
-  position: relative;
+  gap: 2px;
 }
 
-.App-link {
-  color: var(--text-secondary);
-  transition: color 0.3s ease;
+.gameTitle {
+  margin: 0;
+  font-size: 22px;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
 }
 
-.theme-toggle {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background-color: var(--button-bg);
-  color: var(--button-text);
-  border: none;
-  border-radius: 8px;
-  padding: 10px 20px;
-  font-size: 14px;
+.gameSubtitle {
+  margin: 0;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.statusPill {
+  padding: 10px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(17, 24, 39, 0.10);
+  background: rgba(255, 255, 255, 0.75);
+  box-shadow: var(--shadow-soft);
+  font-size: 13px;
   font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.statusPill--win {
+  border-color: rgba(245, 158, 11, 0.35);
+  background: rgba(245, 158, 11, 0.14);
+}
+
+.statusPill--draw {
+  border-color: rgba(37, 99, 235, 0.28);
+  background: rgba(37, 99, 235, 0.10);
+}
+
+.boardCard {
+  padding: 14px;
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(17, 24, 39, 0.08);
+  box-shadow: var(--shadow-soft);
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  width: 100%;
+}
+
+.cell {
+  appearance: none;
+  border: 1px solid rgba(17, 24, 39, 0.10);
+  background: linear-gradient(180deg, rgba(37, 99, 235, 0.07), rgba(249, 250, 251, 0.5));
+  border-radius: var(--radius-md);
+  aspect-ratio: 1 / 1;
+  width: 100%;
+
+  display: grid;
+  place-items: center;
+
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition),
+    background var(--transition);
+  box-shadow: 0 2px 0 rgba(17, 24, 39, 0.04);
 }
 
-.theme-toggle:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  opacity: 0.9;
+.cell:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 22px rgba(17, 24, 39, 0.10);
+  border-color: rgba(37, 99, 235, 0.28);
 }
 
-.theme-toggle:active {
-  transform: translateY(0);
+.cell:focus-visible {
+  outline: 3px solid var(--ring);
+  outline-offset: 2px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.cell:disabled {
+  cursor: not-allowed;
+  opacity: 0.95;
+}
+
+.cell--filled {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(249, 250, 251, 0.85));
+}
+
+.cellValue {
+  font-size: clamp(40px, 7vw, 62px);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.cell--x .cellValue {
+  color: var(--primary);
+  text-shadow: 0 6px 18px rgba(37, 99, 235, 0.18);
+}
+
+.cell--o .cellValue {
+  color: var(--accent);
+  text-shadow: 0 6px 18px rgba(245, 158, 11, 0.18);
+}
+
+.cell--winning {
+  border-color: rgba(245, 158, 11, 0.55);
+  background: linear-gradient(180deg, rgba(245, 158, 11, 0.20), rgba(255, 255, 255, 0.75));
+  box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.16), 0 16px 28px rgba(17, 24, 39, 0.14);
+  transform: translateY(-1px);
+}
+
+.controls {
+  display: grid;
+  gap: 10px;
+  margin-top: 14px;
+  justify-items: center;
+}
+
+.btnPrimary {
+  appearance: none;
+  border: none;
+  border-radius: 999px;
+  padding: 10px 16px;
+  font-weight: 700;
+  font-size: 14px;
+  color: #ffffff;
+  background: linear-gradient(180deg, rgba(37, 99, 235, 1), rgba(29, 78, 216, 1));
+  box-shadow: 0 12px 22px rgba(37, 99, 235, 0.22);
+  cursor: pointer;
+  transition: transform var(--transition), box-shadow var(--transition), filter var(--transition);
+}
+
+.btnPrimary:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.02);
+  box-shadow: 0 16px 28px rgba(37, 99, 235, 0.26);
+}
+
+.btnPrimary:active {
+  transform: translateY(0px);
+  box-shadow: 0 10px 18px rgba(37, 99, 235, 0.22);
+}
+
+.btnPrimary:focus-visible {
+  outline: 3px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.hintText {
+  margin: 0;
+  font-size: 13px;
+  color: var(--muted);
+  text-align: center;
+  line-height: 1.35;
+}
+
+/* Mobile tweaks */
+@media (max-width: 420px) {
+  .gameShell {
+    padding: 14px;
   }
-  to {
-    transform: rotate(360deg);
+
+  .boardCard {
+    padding: 12px;
+  }
+
+  .board {
+    gap: 8px;
+  }
+
+  .statusPill {
+    padding: 9px 10px;
+    font-size: 12.5px;
   }
 }
 
-/* Responsive design for mobile */
-@media (max-width: 768px) {
-  .theme-toggle {
-    top: 10px;
-    right: 10px;
-    padding: 8px 16px;
-    font-size: 12px;
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .cell,
+  .btnPrimary {
+    transition: none;
+  }
+  .cell:hover,
+  .btnPrimary:hover {
+    transform: none;
   }
 }
